@@ -3,6 +3,7 @@ package com.br.naia.cadastropessoa.translator;
 import com.br.naia.cadastropessoa.dto.PessoaDto;
 import com.br.naia.cadastropessoa.entity.PessoaEntity;
 import com.br.naia.cadastropessoa.exception.DataInvalidaException;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +14,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
+@Setter
 public class PessoaTranslator {
 
     @Autowired

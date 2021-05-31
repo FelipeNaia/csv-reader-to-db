@@ -3,12 +3,15 @@ package com.br.naia.cadastropessoa.service;
 import br.com.caelum.stella.validation.CPFValidator;
 import br.com.caelum.stella.validation.InvalidStateException;
 import com.br.naia.cadastropessoa.dataprovider.PessoaDataProvider;
+import com.br.naia.cadastropessoa.dto.PageDto;
 import com.br.naia.cadastropessoa.dto.PessoaDto;
 import com.br.naia.cadastropessoa.entity.ContatoEntity;
 import com.br.naia.cadastropessoa.entity.PessoaEntity;
 import com.br.naia.cadastropessoa.exception.CpfInvalidoException;
 import com.br.naia.cadastropessoa.translator.PessoaTranslator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -35,6 +38,11 @@ public class PessoaService {
         return pessoaTranslator.toDto(pessoaDataProvider.salvar(pessoaEntity));
     }
 
+    public void remover(Long id) {
+        Assert.notNull(id, "Deve ser informada uma pessoa a ser removida");
+        pessoaDataProvider.remover(id);
+    }
+
     private void validarPessoa(PessoaEntity pessoaEntity) {
         Assert.notNull(pessoaEntity, "É necessário preencher as informações da pessoa");
         validarCPF(pessoaEntity.getCpf());
@@ -42,7 +50,7 @@ public class PessoaService {
         validarContatos(pessoaEntity.getContatos());
     }
 
-    public void validarCPF(String cpf) {
+    private void validarCPF(String cpf) {
         try {
             cpfValidator.assertValid(cpf);
         } catch (InvalidStateException e) {
@@ -60,5 +68,10 @@ public class PessoaService {
 
     public PessoaDto buscar(Long id) {
         return pessoaTranslator.toDto(pessoaDataProvider.buscar(id));
+    }
+
+    public PageDto<PessoaDto> buscarLista(PageRequest pageRequest) {
+        Page<PessoaEntity> pessoaPage = pessoaDataProvider.buscarPaginado(pageRequest);
+        return new PageDto<>(pessoaTranslator.toDtoList(pessoaPage.getContent()), pessoaPage.getTotalElements(), pessoaPage.getTotalPages());
     }
 }

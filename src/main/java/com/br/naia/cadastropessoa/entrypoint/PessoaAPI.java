@@ -1,8 +1,12 @@
 package com.br.naia.cadastropessoa.entrypoint;
 
+import com.br.naia.cadastropessoa.dto.PageDto;
 import com.br.naia.cadastropessoa.dto.PessoaDto;
 import com.br.naia.cadastropessoa.service.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -12,22 +16,25 @@ public class PessoaAPI {
     @Autowired
     private PessoaService pessoaService;
 
-    @PostMapping(value = "/validarcpf/{cpf}")
-    public String validarCpf(@PathVariable String cpf) {
-//        Método feito para testar a API
-        pessoaService.validarCPF(cpf);
-        return cpf + " é válido";
-    }
-
-    @PostMapping(value = "/salvar")
+    @PutMapping
+    @PostMapping
     public PessoaDto salvar(@RequestBody PessoaDto pessoaDto) {
         return pessoaService.salvar(pessoaDto);
-
     }
 
     @GetMapping(value = "/{id}")
-    public PessoaDto salvar(@PathVariable Long id) {
+    public PessoaDto buscar(@PathVariable Long id) {
         return pessoaService.buscar(id);
+    }
 
+    @GetMapping(value = "/lista", params = { "page", "size" })
+    public PageDto<PessoaDto> buscarLista(@RequestParam("page") int page, @RequestParam("size") int size) {
+        return pessoaService.buscarLista(PageRequest.of(page, size));
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity remover(@PathVariable Long id) {
+        pessoaService.remover(id);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 }
