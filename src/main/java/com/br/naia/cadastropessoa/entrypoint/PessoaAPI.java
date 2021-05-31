@@ -17,6 +17,10 @@ public class PessoaAPI {
     private PessoaService pessoaService;
 
     @PutMapping
+    public PessoaDto incluir(@RequestBody PessoaDto pessoaDto) {
+        return pessoaService.salvar(pessoaDto);
+    }
+
     @PostMapping
     public PessoaDto salvar(@RequestBody PessoaDto pessoaDto) {
         return pessoaService.salvar(pessoaDto);

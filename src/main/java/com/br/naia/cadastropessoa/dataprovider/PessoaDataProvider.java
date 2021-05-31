@@ -24,8 +24,8 @@ public class PessoaDataProvider {
     @Transactional
     public PessoaEntity salvar(PessoaEntity pessoaEntity) {
         PessoaEntity pessoaSalva = pessoaRepository.save(pessoaEntity);
-        pessoaSalva.getContatos().forEach(contatoEntity -> contatoEntity.setPessoaEntity(pessoaSalva));
-        pessoaSalva.setContatos(contatoRepository.saveAll(pessoaSalva.getContatos()));
+        pessoaEntity.getContatos().forEach(contatoEntity -> contatoEntity.setPessoaEntity(pessoaSalva));
+        pessoaSalva.setContatos(contatoRepository.saveAll(pessoaEntity.getContatos()));
         return pessoaSalva;
     }
 
