@@ -33,7 +33,7 @@ public class PessoaDataProviderTest {
     }
 
     @Test
-    public void salvarPessoaSemErros() {
+    public void deveSalvarPessoaSemErros() {
         PessoaEntity pessoaEntity = mock(PessoaEntity.class);
         List<ContatoEntity> contatoEntities = List.of(mock(ContatoEntity.class));
 
@@ -46,7 +46,7 @@ public class PessoaDataProviderTest {
     }
 
     @Test
-    public void deletarPeloId() {
+    public void deveDeletarPeloId() {
         Long id = 1L;
 
         pessoaDataProvider.remover(id);
@@ -55,7 +55,7 @@ public class PessoaDataProviderTest {
     }
 
     @Test
-    public void buscarPessoaComContatos() {
+    public void deveBuscarPessoaComContatos() {
         Long id = 1L;
         PessoaEntity pessoaEntity = mock(PessoaEntity.class);
         when(pessoaEntity.getId()).thenReturn(id);
