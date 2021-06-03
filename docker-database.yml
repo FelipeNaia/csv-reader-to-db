@@ -9,18 +9,15 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-    env_file:
-      - variables.env
-  mongo:
-    image: mongo:3
+  backend:
+    image: cadastropessoa-back:latest
     ports:
-      - 27017:27017
-    volumes:
-      - mongodata:/data/db
+      - 8082:8082
+    depends_on:
+      - database
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://database:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
 volumes:
   databasedata:
-  mongodata:
-networks:
-  default:
-    external:
-      name: siganet
