@@ -1,0 +1,26 @@
+version: '3'
+services:
+  database:
+    image: postgres:10.5-alpine
+    ports:
+      - 5432:5432
+    volumes:
+      - databasedata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    env_file:
+      - variables.env
+  mongo:
+    image: mongo:3
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodata:/data/db
+volumes:
+  databasedata:
+  mongodata:
+networks:
+  default:
+    external:
+      name: siganet
