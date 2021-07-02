@@ -91,10 +91,6 @@ public class Bem {
     @CsvBindByName(column = "DT_ULTIMA_ATUALIZACAO")
     private String DT_ULTIMA_ATUALIZACAO;
 
-    @Column(name = "HH_ULTIMA_ATUALIZACA")
-    @CsvBindByName(column = "HH_ULTIMA_ATUALIZACA")
-    private String HH_ULTIMA_ATUALIZACA;
-    
 //DT_GERACAO
 //HH_GERACAO
 //ANO_ELEICAO

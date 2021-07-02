@@ -4,6 +4,7 @@ import com.br.naia.csvreadertodb.entity.*;
 import com.br.naia.csvreadertodb.repository.*;
 import com.opencsv.bean.CsvToBeanBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,8 +39,16 @@ public class PessoaAPI {
     private static final String ARQUIVO_VAGA = "src/main/resources/consulta_vagas_2020_MS.csv";
     private static final String ARQUIVO_CASSACAO = "src/main/resources/motivo_cassacao_2020_MS.csv";
 
+    @GetMapping("/teste")
+    public String teste()  {
+        return "ok";
+    }
+
     @GetMapping
     public String incluir() throws IOException {
+
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
 
         List<Bem> bems = new CsvToBeanBuilder<Bem>(new FileReader(ARQUIVO_BEM, Charset.forName("windows-1252")))
                 .withSeparator(';')
@@ -81,12 +90,9 @@ public class PessoaAPI {
 
         vagaRepository.saveAll(vagas);
 
+        stopWatch.stop();
 
-
-
-
-
-        return "Olá mundo";
+        return "Levaram " + stopWatch.getTotalTimeSeconds() + " segundos para incluir os registros";
     }
 
 }

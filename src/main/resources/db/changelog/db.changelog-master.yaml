@@ -1,3 +1,5 @@
 databaseChangeLog:
   - include:
       file: db/changelog/csv-carga-inicial.sql
+  - include:
+      file: db/changelog/csv-alterar-bem.sql
