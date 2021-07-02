@@ -14,6 +14,7 @@ import javax.persistence.*;
 @Table(name = "BEM", schema = "ELEICAO")
 @SequenceGenerator(name = "SEQ_BEM", sequenceName = "ELEICAO.SEQ_BEM", allocationSize = 1)
 public class Bem {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "SEQ_BEM")
     @Column(name = "BEM_ID")
